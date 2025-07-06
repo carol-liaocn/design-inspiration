@@ -33,12 +33,7 @@ const SafeRotatingSphere = () => {
     return <SimpleFallback />;
   }
 
-  try {
-    return <RotatingSphere />;
-  } catch (error) {
-    console.error('RotatingSphere component error:', error);
-    return <SimpleFallback />;
-  }
+  return <RotatingSphere />;
 };
 
 const RotatingSphere = () => {
