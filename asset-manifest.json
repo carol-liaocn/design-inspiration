@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/inspiration/static/css/main.f098cc0c.css",
+    "main.js": "/inspiration/static/js/main.2527b779.js",
+    "index.html": "/inspiration/index.html",
+    "main.f098cc0c.css.map": "/inspiration/static/css/main.f098cc0c.css.map",
+    "main.2527b779.js.map": "/inspiration/static/js/main.2527b779.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f098cc0c.css",
+    "static/js/main.2527b779.js"
+  ]
+}
