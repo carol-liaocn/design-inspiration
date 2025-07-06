@@ -2,6 +2,45 @@ import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import * as THREE from 'three';
 import mediaList from '../../data/mediaList.json';
 
+// 简化的fallback组件
+const SimpleFallback = () => (
+  <div className="flex items-center justify-center h-full w-full">
+    <div className="text-center">
+      <div className="w-32 h-32 bg-design-yellow rounded-full flex items-center justify-center mb-4 mx-auto">
+        <span className="text-4xl text-black">🎨</span>
+      </div>
+      <h2 className="text-xl text-light-gray">设计友好报</h2>
+      <p className="text-light-gray opacity-60 mt-2">探索创意设计世界</p>
+    </div>
+  </div>
+);
+
+// 安全包装组件
+const SafeRotatingSphere = () => {
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    const errorHandler = (error) => {
+      console.error('Three.js error:', error);
+      setHasError(true);
+    };
+
+    window.addEventListener('error', errorHandler);
+    return () => window.removeEventListener('error', errorHandler);
+  }, []);
+
+  if (hasError) {
+    return <SimpleFallback />;
+  }
+
+  try {
+    return <RotatingSphere />;
+  } catch (error) {
+    console.error('RotatingSphere component error:', error);
+    return <SimpleFallback />;
+  }
+};
+
 const RotatingSphere = () => {
   const mountRef = useRef(null);
   const sceneRef = useRef(null);
@@ -36,7 +75,7 @@ const RotatingSphere = () => {
   const isLoadingTextureRef = useRef(false);
   const lastSwitchTimeRef = useRef(0);
 
-  // 球体和立方体配置
+  // 球体和立方体配置 - 移到hooks区域
   const SPHERE_CONFIG = useMemo(() => ({
     radius: 1.2,
     cubesPerRing: 20, // 每个环的立方体数量（减少以提升性能）
@@ -1119,4 +1158,4 @@ const RotatingSphere = () => {
   );
 };
 
-export default RotatingSphere; 
+export default SafeRotatingSphere; 

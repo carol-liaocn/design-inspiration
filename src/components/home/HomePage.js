@@ -3,6 +3,40 @@ import RotatingSphere from './RotatingSphere';
 import LoadingSpinner from '../LoadingSpinner';
 import './HomePage.css';
 
+// 错误边界组件
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('ErrorBoundary caught an error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex items-center justify-center h-full w-full">
+          <div className="text-center">
+            <div className="w-32 h-32 bg-design-yellow rounded-full flex items-center justify-center mb-4 mx-auto">
+              <span className="text-4xl text-black">🎨</span>
+            </div>
+            <h2 className="text-xl text-light-gray">设计友好报</h2>
+            <p className="text-light-gray opacity-60 mt-2">探索创意设计世界</p>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 const HomePage = ({ activeTab, setActiveTab }) => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -14,6 +48,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
 
     return () => clearTimeout(timer);
   }, []);
+
   const navItems = [
     { id: 'inspiration', label: 'inspiration' },
     { id: 'artist', label: 'artist' },
@@ -72,7 +107,9 @@ const HomePage = ({ activeTab, setActiveTab }) => {
 
       {/* 中央球体区域 - 全屏居中 */}
       <div className={`sphere-container transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
-        <RotatingSphere />
+        <ErrorBoundary>
+          <RotatingSphere />
+        </ErrorBoundary>
       </div>
     </div>
   );
