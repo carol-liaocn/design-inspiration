@@ -54,10 +54,7 @@ const InspirationPage = () => {
     return colors[tag] || 'bg-gray-500';
   };
 
-  // 处理URL编码
-  const getEncodedPath = (path) => {
-    return path.split('/').map(segment => encodeURIComponent(segment)).join('/');
-  };
+
 
   return (
     <div className="ml-80 min-h-screen bg-dark-bg">
@@ -95,7 +92,7 @@ const InspirationPage = () => {
                 >
                   <div className="aspect-[4/5] bg-design-gray rounded-xl overflow-hidden mb-6 group-hover:opacity-80 transition-opacity">
                     <LazyMedia
-                      src={getEncodedPath(project.cover)}
+                      src={project.cover}
                       alt={project.title}
                       className="w-full h-full object-cover"
                       placeholder={

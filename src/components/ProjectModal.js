@@ -15,13 +15,10 @@ const ProjectModal = ({ project, onClose }) => {
 
   // 渲染媒体内容（图片或视频）
   const renderMedia = (src, alt, className = "w-full h-full object-cover") => {
-    // 对路径进行URL编码处理，但保留斜杠
-    const encodedPath = src.split('/').map(segment => encodeURIComponent(segment)).join('/');
-    
     if (isVideo(src)) {
       return (
         <video
-          src={encodedPath}
+          src={src}
           autoPlay
           loop
           muted
@@ -35,7 +32,7 @@ const ProjectModal = ({ project, onClose }) => {
     } else {
       return (
         <img
-          src={encodedPath}
+          src={src}
           alt={alt}
           className={className}
           onError={(e) => {
